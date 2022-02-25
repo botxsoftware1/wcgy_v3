@@ -315,7 +315,7 @@
     <!--Experiment for MOdal for Call Back and Appoinment-->
     <!-- Modal toggle -->
     <!-- Main modal -->
-    <div id="hi-modal" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+    <div id="hi-modal" aria-hidden="true" class="hidden z-40 overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
       <div class="relative px-4 w-full max-w-md h-full md:h-auto">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -350,9 +350,14 @@
         </div>
       </div>
     </div> 
-    
 
+    <div id="toastDiv1" class="absolute top-5 right-5 z-50"></div>  
+    <div id="toastDiv2" class="absolute top-5 right-5 z-50"></div>  
     <div id="app"></div>
+    
+   
+
+    
     <!-- <div class="pl-96 ml-80 ">
         <a href="#" class="w-10" id="btn-prev">Prev</a>
         <a href="#" id="btn-next">Next</a>
@@ -365,25 +370,25 @@
     </div>
     <div id="listing-table"></div>
 
+    <!-- FILTER -->
     <fieldset>
       <legend class="block w-full px-5 py-3 text-xs font-medium bg-gray-50">
         Type
       </legend>
 
-      <div class="px-5 py-6 space-y-2">
+      <div id="typeDiv" class="px-5 py-6 space-y-2">
         <div class="flex items-center">
           <input
             id="typeInternship"
             type="checkbox"
-            name="type[typeInternship]"
-            class="w-5 h-5 border-gray-300 rounded"
+            name="IN"
+            class="jobKind w-5 h-5 border-gray-300 rounded"
           />
-
           <label
             for="typeInternship"
             class="ml-3 text-sm font-medium"
           >
-            typeInternship
+            Internship
           </label>
         </div>
 
@@ -391,15 +396,15 @@
           <input
             id="typeFulltimeJob"
             type="checkbox"
-            name="type[typeFulltimeJob]"
-            class="w-5 h-5 border-gray-300 rounded"
+            name="FT"
+            class="jobKind w-5 h-5 border-gray-300 rounded"
           />
 
           <label
             for="typeFulltimeJob"
             class="ml-3 text-sm font-medium"
           >
-            typeFulltimeJob
+            FulltimeJob
           </label>
         </div>
 
@@ -407,15 +412,15 @@
           <input
             id="typePartTimeJob"
             type="checkbox"
-            name="type[typePartTimeJob]"
-            class="w-5 h-5 border-gray-300 rounded"
+            name="PT"
+            class="jobKind w-5 h-5 border-gray-300 rounded"
           />
 
           <label
             for="typePartTimeJob"
             class="ml-3 text-sm font-medium"
           >
-            typePartTimeJob
+            PartTimeJob
           </label>
         </div>
 
@@ -430,6 +435,7 @@
         </div>
       </div>
     </fieldset>
+    <!-- END FILTER -->
 
     <script src="assets/js/main.js"></script>
 
@@ -440,7 +446,7 @@
   <span class="text-gray-400 inline-flex items-center leading-none text-sm"></span></div>
   
   
-  <footer class="bg-white" aria-labelledby="footer-heading">
+  <footer class="bg-white " aria-labelledby="footer-heading">
     <h2 id="footer-heading" class="sr-only">Footer</h2>
     <div class="px-5 py-12 mx-auto max-w-7xl lg:py-16 md:px-12 lg:px-8">
       <div class="xl:grid xl:grid-cols-3 xl:gap-8 ">
@@ -642,18 +648,50 @@
         var phoneValidation = $("#Phone").val();
         var resumeValidation = $('#sampleFiles').val();
         if(resumeValidation !='' && nameValidation != '' && emailValidation != '' && phoneValidation!= '')
-          { 
-              run(this)
-              postToGoogle();
-              return false;
+          {   
+              const fsize = document.getElementById('sampleFiles').files.item(0).size;
+              const file = Math.round((fsize / 1024));
+              // The size of the file.
+              if (file >= 4096) {
+                document.getElementById('toastDiv2').innerHTML=`
+                <div id="toast-warning" class="flex items-center w-full max-w-xs p-4 text-gray-500 bg-red rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+                  <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200">
+                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                  </div>
+                  <div class="ml-3 text-sm font-normal">Improve password difficulty.</div>
+                  <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-collapse-toggle="toast-warning" aria-label="Close">
+                      <span class="sr-only">Close</span>
+                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                  </button>
+                </div>`
+              } 
+              else if (file < 2048) {
+                document.getElementById('toastDiv1').innerHTML=`
+                <div id="toast-warning" class="flex items-center w-full max-w-xs p-4 text-gray-500 bg-red rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+                  <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200">
+                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                  </div>
+                  <div class="ml-3 text-sm font-normal">Improve password difficulty.</div>
+                  <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-collapse-toggle="toast-warning" aria-label="Close">
+                      <span class="sr-only">Close</span>
+                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                  </button>
+                </div>`
+              }
+              else {
+                  alert("File Size : "+file);
+                  run(this)
+                  postToGoogle();
+                  return false;
+              }
           } 
-           else {
-              Swal.fire(
-                'Incomplete Form!',
-                'Please fill the form completely and try again!',
-                'error'
-              )
-              return false; 
+          else {
+            Swal.fire(
+              'Incomplete Form!',
+              'Please fill the form completely and try again!',
+              'error'
+            )
+            return false; 
           }
       }); 
   });
@@ -712,6 +750,7 @@
   }
 </script>
 
+
 <!-- JOB INFO TABS -->
  <script>
   function setup() {
@@ -726,6 +765,7 @@
     };
   };
 </script>
+
 
 <!-- SEARCH -->
 <script>
@@ -762,26 +802,34 @@ $(document).ready(function(){
 });
 </script>
 
-<!-- FILTER -->
-<script>
-$(document).change(function(){
-  var checkbox1 = document.getElementById("typeInternship")
-  var checkbox2 = document.getElementById("typeFulltimeJob")
-  var checkbox3 = document.getElementById("typePartTimeJob")
 
-  if (checkbox1.checked == true){
-    var data_filter = jobsData.filter( element => element.kind == "IN")
-    console.log(data_filter)
-  } 
-  if (checkbox2.checked == true){
-    var data_filter = jobsData.filter( element => element.kind == "FT")
-    console.log(data_filter)
-  } 
-  if(checkbox3.checked == true){
-    var data_filter = jobsData.filter( element => element.kind == "PT")
-    console.log(data_filter)
+<!-- FILTER SCRIPT -->
+<script>
+$('#typeDiv').change(function(){
+  var jobKinds = document.getElementsByClassName("jobKind");
+  for (var i = 0; i < jobKinds.length; i++) {
+    if (jobKinds.item(i).checked == true){
+      var kind_filter = jobsData.filter( element => element.kind == jobKinds.item(i).name)
+      console.log(kind_filter)
+    }
   }
 });
+//   var checkbox1 = document.getElementById("typeInternship")
+//   var checkbox2 = document.getElementById("typeFulltimeJob")
+//   var checkbox3 = document.getElementById("typePartTimeJob")
+
+//   if (checkbox1.checked == true){
+//     var data_filter = jobsData.filter( element => element.kind == "IN")
+//     console.log(data_filter)
+//   } 
+//   if (checkbox2.checked == true){
+//     var data_filter = jobsData.filter( element => element.kind == "FT")
+//     console.log(data_filter)
+//   } 
+//   if(checkbox3.checked == true){
+//     var data_filter = jobsData.filter( element => element.kind == "PT")
+//     console.log(data_filter)
+//   }
 </script>
 
 <script>
@@ -791,7 +839,8 @@ $(document).change(function(){
     document.getElementById("typePartTimeJob").checked = false
   });
 </script>
-<!-- END FILTER -->
+<!-- END FILTER SCRIPT -->
+
 
 </body>
 </html>

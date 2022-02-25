@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--https://github.com/tanaikech/HtmlFormApp  #Repo Sample2-->
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-font-smoothing: antialiased;
+            -o-font-smoothing: antialiased;
+            -font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            font-family: "Roboto", Helvetica, Arial, sans-serif;
+            font-weight: 100;
+            font-size: 12px;
+            line-height: 30px;
+            color: #777;
+            background: #4CAF50;
+        }
+
+        .container {
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #contact input[type="text"],
+        #contact input[type="email"],
+        #contact input[type="tel"],
+        #contact input[type="url"],
+        #contact textarea,
+        #contact button[type="submit"] {
+            font: 400 12px/16px "Roboto", Helvetica, Arial, sans-serif;
+        }
+
+        #contact {
+            background: #F9F9F9;
+            padding: 25px;
+            margin: 150px 0;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+        }
+
+        #contact h3 {
+            display: block;
+            font-size: 30px;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        #contact h4 {
+            margin: 5px 0 15px;
+            display: block;
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        fieldset {
+            border: medium none !important;
+            margin: 0 0 10px;
+            min-width: 100%;
+            padding: 0;
+            width: 100%;
+        }
+
+        #contact input[type="text"],
+        #contact input[type="email"],
+        #contact input[type="tel"],
+        #contact input[type="url"],
+        #contact textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            background: #FFF;
+            margin: 0 0 5px;
+            padding: 10px;
+        }
+
+        #contact input[type="text"]:hover,
+        #contact input[type="email"]:hover,
+        #contact input[type="tel"]:hover,
+        #contact input[type="url"]:hover,
+        #contact textarea:hover {
+            -webkit-transition: border-color 0.3s ease-in-out;
+            -moz-transition: border-color 0.3s ease-in-out;
+            transition: border-color 0.3s ease-in-out;
+            border: 1px solid #aaa;
+        }
+
+        #contact textarea {
+            height: 100px;
+            max-width: 100%;
+            resize: none;
+        }
+
+        #contact button[type="submit"] {
+            cursor: pointer;
+            width: 100%;
+            border: none;
+            background: #4CAF50;
+            color: #FFF;
+            margin: 0 0 5px;
+            padding: 10px;
+            font-size: 15px;
+        }
+
+        #contact button[type="submit"]:hover {
+            background: #43A047;
+            -webkit-transition: background 0.3s ease-in-out;
+            -moz-transition: background 0.3s ease-in-out;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        #contact button[type="submit"]:active {
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .copyright {
+            text-align: center;
+        }
+
+        #contact input:focus,
+        #contact textarea:focus {
+            outline: 0;
+            border: 1px solid #aaa;
+        }
+
+        ::-webkit-input-placeholder {
+            color: #888;
+        }
+
+        :-moz-placeholder {
+            color: #888;
+        }
+
+        ::-moz-placeholder {
+            color: #888;
+        }
+
+        :-ms-input-placeholder {
+            color: #888;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <form id="contact">
+            <h3>Daakshayani Form</h3>
+            <h4>Contact us for custom quote</h4>
+
+            <input placeholder="Your name" id="Name" data-name="Name" type="text" name=“entry.467876062” tabindex="1"
+                required autofocus/>
+            <input placeholder="Your Email Id to receive Confirmation" data-name="Email" id="Email" type="email"
+                name=“entry.362738034” tabindex="2" required />
+            <input placeholder="Job ID" id="JobId" data-name="JobId" name=“entry.284597317” type="tel" tabindex="3"
+                required/>
+            <input placeholder="Your Phone Number" id="Phone" data-name="Phone" name=“entry.961587284” type="tel"
+                minlength="10" maxlength="10" tabindex="4" required/>
+            <input type="file" name="sampleFiles" id="sampleFiles" multiple/><br/>
+            <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#contact-submit').bind("click",function() 
+            { 
+                var nameValidation = $("#Name").val();
+                var emailValidation = $("#Email").val();
+                var phoneValidation = $("#Phone").val();
+                var resumeValidation = $('#sampleFiles').val();
+                if(resumeValidation !='' && nameValidation != '' && emailValidation != '' && phoneValidation!= '')
+                { 
+                    run(this)
+                    postToGoogle();
+                    return false;
+                    
+                } 
+                 else {
+                    Swal.fire(
+                      'Incomplete Form!',
+                      'Please fill the form completely and try again!',
+                      'error'
+                    )
+                    return false; 
+                }
+            }); 
+        });
+    </script> 
+        
+    <!-- <input type="file" name="image" id="uploadfile" size="30" /> 
+    <input type="submit" name="upload" id="upload"  class="send_upload" value="upload" /> -->
+
+    <script src="https://cdn.jsdelivr.net/gh/tanaikech/HtmlFormObjectParserForGoogleAppsScript_js/htmlFormObjectParserForGoogleAppsScript_js.min.js"></script>
+
+    <script>
+        async function run(e) {
+
+            const fsize = document.getElementById('sampleFiles').files.item(0).size;
+            const file = Math.round((fsize / 1024));
+            var resumeFilename = $("#Name").val()+"_"+$("#JobId").val();
+            // The size of the file.
+            if (file >= 4096) {
+                alert(
+                  "File too Big, please select a file less than 4mb");
+            } 
+            // else if (file < 2048) {
+            //     alert(
+            //       "File too small, please select a file greater than 2mb");
+            // } 
+            else {
+                alert("File Size : "+file);
+                const url = "https://script.google.com/macros/s/AKfycbyQDwALdCcYdTdyGwLI5NBaLvvmI9R8UZlM5aO0w8kdG6gc2ODTVavaG88y27Y6-MtPSQ/exec";
+                const obj = await ParseFormObjectForGAS(e.parentNode, null, null, true);
+                obj.sampleFiles[0].files[0].filename = resumeFilename
+                fetch(url, { method: "POST", body: JSON.stringify(obj)})
+                    .then((res) => res.json());
+            }
+        }
+    </script>
+
+    <script>
+        function postToGoogle() {
+            var field1 = $("#Name").val();
+            var field2 = $("#Email").val();
+            var field3 = $("#JobId").val();
+            var field4 = $("#Phone").val();
+
+            $.ajax({
+                url: "https://docs.google.com/forms/u/3/d/e/1FAIpQLSfzYmaJ6VC0MlGZF5mas6UFgJFbrCqh01c8gstmEAQhrif7Qw/formResponse",
+
+                //add your google form generated numbers below which are also the 'names' of your inputs     
+                data: {
+                    "entry.467876062": field1,
+                    "entry.362738034": field2,
+                    "entry.284597317": field3,
+                    "entry.961587284": field4,
+                },
+                type: "POST",
+                dataType: "xml",
+                success: function (d) {
+                    alert("hello");
+                    $('#contact').trigger('reset');
+                },
+                error: function (x, y, z) {
+                    Swal.fire(
+                      'Application Submitted!',
+                      'You will receive a confirmation mail along with a Unique Reference Id after our system reviews your application.',
+                      'success'
+                    )
+                    $('#contact').trigger('reset');
+                }
+            });
+            return false;
+        }
+    </script>
+
+</body>
+</html>
+
+
+
+<!-- 
+function RenameResponses() {
+    var form = FormApp.openById('1lF9l1zlaWXzIP_mH_NjLDYGKHv3JRkdZnRdCi32OI9o'); //Copy_and_paste_your_FormId_here
+    var formResponses = form.getResponses();
+    var baseString = 'https://drive.google.com/file/d/';
+    var endString = '/view?usp=drivesdk';
+      
+    var folder = DriveApp.getFolderById('0B430GTfdIcKmfjJtY29pZGlMWlV5NVZPTXZfRGlYaEpfQmlxNXdRaEtKeEV0YlB5NHNKWUE'); //Copy_and_paste_your_DriveId_here
+    var files = folder.getFiles();
+     
+      while (files.hasNext()) {
+        var file = files.next();
+        for (var i = 0; i < formResponses.length; i++) {
+          var formResponse = formResponses[i];
+          var itemResponses = formResponse.getItemResponses();
+          var itemResponseFirst = itemResponses[2];
+          var itemResponseSecond = itemResponses[3];
+          var itemResponseThird = itemResponses[1];
+          var itemResponsePhoto = itemResponses[8];
+          ​var photoID = itemResponsePhoto.getResponse();
+          ​var newName = itemResponseFirst.getResponse() + " " + itemResponseSecond.getResponse() + " - " + itemResponseThird.getResponse();
+          ​var url = baseString + photoID + endString;
+          ​var urlCheck = file.getUrl();
+          ​if ( url == urlCheck) {
+           ​var modName = newName + ".jpg";
+           ​file.setName(modName);
+         ​}
+       ​}
+     ​} -->
+
+

@@ -1,0 +1,25 @@
+function doPost(e) {
+
+  var obj = {
+    formData: e,
+    spreadsheetId: "1Hl_-y2PO3fC3O_SLVfGVNuj0G6TkdGFn-RxBirr5Z3o",
+    sheetName: "helloBot",
+    folderId: findFile(),
+    ignoreHeader: true,
+  };
+
+  const res = HtmlFormApp.appendFormData(obj);
+  return ContentService.createTextOutput(
+    JSON.stringify({ message: "Done", row: res.range.getRow() })
+  );
+}
+
+function findFile() {
+  var jobFolderId;
+  let folders = DriveApp.getFoldersByName('22222');
+  while (folders.hasNext()) {
+    var folder = folders.next();
+    jobFolderId = folder.getId();
+  }
+  return jobFolderId
+}
