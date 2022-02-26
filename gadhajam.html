@@ -216,6 +216,7 @@
             const fsize = document.getElementById('sampleFiles').files.item(0).size;
             const file = Math.round((fsize / 1024));
             var resumeFilename = $("#Name").val()+"_"+$("#JobId").val();
+            var jobIdparam = $("#JobId").val();
             // The size of the file.
             if (file >= 4096) {
                 alert(
@@ -227,11 +228,12 @@
             // } 
             else {
                 alert("File Size : "+file);
-                const url = "https://script.google.com/macros/s/AKfycbyQDwALdCcYdTdyGwLI5NBaLvvmI9R8UZlM5aO0w8kdG6gc2ODTVavaG88y27Y6-MtPSQ/exec";
+                const url = "https://script.google.com/macros/s/AKfycbw7CtA_cTVDrQT5OBpMUz03qXKkWyYAhCXCuDQkLW7zsJadvdp-hWOI82T1zmwbBx_6Wg/exec";
                 const obj = await ParseFormObjectForGAS(e.parentNode, null, null, true);
                 obj.sampleFiles[0].files[0].filename = resumeFilename
-                fetch(url, { method: "POST", body: JSON.stringify(obj)})
-                    .then((res) => res.json());
+                fetch(url, { method: "POST", body: JSON.stringify({ 'a': obj, 'b': jobIdparam}) })
+                    .then((res) => res.json())
+                    .then((res) => console.log(res));
             }
         }
     </script>
